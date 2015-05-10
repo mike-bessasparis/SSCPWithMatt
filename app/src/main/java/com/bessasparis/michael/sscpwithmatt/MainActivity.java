@@ -1,18 +1,47 @@
 package com.bessasparis.michael.sscpwithmatt;
 
-import android.support.v7.app.ActionBarActivity;
+import android.content.res.AssetManager;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.io.InputStream;
 
 
 public class MainActivity extends ActionBarActivity {
 
-    //only loads a fragment
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+    }
+
+
+    private JSONObject loadJSONFromAsset() {
+        JSONObject mObj = null;
+
+        AssetManager assetMgr = getAssets();
+
+        InputStream input;
+
+        try {
+            input = assetMgr.open("ports.json");
+            int size = input.available();
+            byte[] buffer = new byte[size];
+            input.read(buffer);
+            input.close();
+            // byte buffer into a string
+            String text = new String(buffer);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return mObj;
+
     }
 
 
