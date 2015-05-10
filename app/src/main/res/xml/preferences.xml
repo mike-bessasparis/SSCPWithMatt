@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--<ListPreference-->
+        <!--android:defaultValue="questions"-->
+        <!--android:entries="@array/quiz_pref"-->
+        <!--android:entryValues="@array/quiz_pref_values"-->
+        <!--android:key="pref_quizType"-->
+        <!--android:title="Select a Quiz Type" />-->
+
+    <CheckBoxPreference
+        android:defaultValue="true"
+        android:key="pref_ports"
+        android:summary="Check for ports. Clear for questions."
+        android:title="pref_ports" />
+</PreferenceScreen>
