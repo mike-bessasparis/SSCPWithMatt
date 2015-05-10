@@ -6,7 +6,8 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import org.json.JSONObject;
+import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -18,12 +19,16 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        loadJSONFromAsset();
+
     }
 
 
-    private JSONObject loadJSONFromAsset() {
-        JSONObject mObj = null;
+    private JSONArray loadJSONFromAsset() {
 
+        String text = null;
+        JSONArray mJArray = null;
         AssetManager assetMgr = getAssets();
 
         InputStream input;
@@ -35,12 +40,21 @@ public class MainActivity extends ActionBarActivity {
             input.read(buffer);
             input.close();
             // byte buffer into a string
-            String text = new String(buffer);
+            text = new String(buffer);
+//            Log.i("mjb", "JSONstr: "+text);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        return mObj;
+
+        try {
+            mJArray = new JSONArray(text);
+        }
+        catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return mJArray;
 
     }
 
