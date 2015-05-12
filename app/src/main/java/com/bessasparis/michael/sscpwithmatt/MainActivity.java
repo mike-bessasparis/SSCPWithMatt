@@ -1,60 +1,79 @@
 package com.bessasparis.michael.sscpwithmatt;
 
-import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
 
 
 public class MainActivity extends ActionBarActivity {
+    JSONObject mJObj;
+    JSONObject mQuestionObject;
+    QuestionFragment mQuestion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        loadJSONFromAsset();
+        try {
+            mJObj = loadJSONFromAsset();
+             Log.i("mjb", "JSONstr: "+mJObj);
+            mQuestionObject = getQuestionObjToDisplay(mJObj);
+            mQuestion.displayQuestion(mQuestionObject);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        Log.i("mjb", "JSONQuestion: " + mQuestionObject);
+
 
     }
 
+    // takes the JSON object read from file
+    // returns the next question object to display
+    private JSONObject getQuestionObjToDisplay(JSONObject mObj) throws JSONException {
+        int i = 0; //hardcoded for testing
 
-    private JSONArray loadJSONFromAsset() {
+ Log.i("mjb", "JSON Obj: "+mObj);
+        JSONArray questionsArray = mObj.getJSONArray("questions");
+        JSONObject questionObj = questionsArray.getJSONObject(i);
 
-        String text = null;
-        JSONArray mJArray = null;
-        AssetManager assetMgr = getAssets();
+        return questionObj;
+    }
 
-        InputStream input;
+    //loads the json object from file
+    public JSONObject loadJSONFromAsset() {
+        String json;
+        JSONObject jsonObj = null;
 
         try {
-            input = assetMgr.open("ports.json");
-            int size = input.available();
+            InputStream is = getAssets().open("ports.json");
+            int size = is.available();
             byte[] buffer = new byte[size];
-            input.read(buffer);
-            input.close();
-            // byte buffer into a string
-            text = new String(buffer);
-//            Log.i("mjb", "JSONstr: "+text);
-        } catch (IOException e) {
-            e.printStackTrace();
+            is.read(buffer);
+            is.close();
+            json = new String(buffer, "UTF-8");
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            return null;
         }
-
 
         try {
-            mJArray = new JSONArray(text);
-        }
-        catch (JSONException e) {
+            jsonObj = new JSONObject(json);
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
-        return mJArray;
+        return jsonObj;
 
     }
 

@@ -4,6 +4,7 @@ package com.bessasparis.michael.sscpwithmatt;
 import android.app.Fragment;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,7 +54,13 @@ public class QuestionFragment extends Fragment {
     //accept json question object, displays question and choices
     public void displayQuestion(JSONObject qObject) throws JSONException {
 
-        questionText.setText(qObject.getString("questiontext"));
+//        questionText.setText(qObject.getString("questiontext"));
+
+         Log.i("mjb", "display question: " + qObject);
+
+        questionText.setText("mikeb");
+
+
         choice1.setText(qObject.getString("answerchoice1"));
         choice2.setText(qObject.getString("answerchoice2"));
         choice3.setText(qObject.getString("answerchoice3"));
