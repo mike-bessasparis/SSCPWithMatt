@@ -46,7 +46,7 @@ public class QuestionFragment extends Fragment {
         choice3 = (Button) V.findViewById(R.id.answerchoice3);
         choice4 = (Button) V.findViewById(R.id.answerchoice4);
         feedbackText = (TextView) V.findViewById(R.id.feedback);
-        feedbackText.setText("");
+        feedbackText.setText("just built");
 
         return V;
     }
@@ -54,9 +54,9 @@ public class QuestionFragment extends Fragment {
     //accept json question object, displays question and choices
     public void displayQuestion(JSONObject qObject) throws JSONException {
 
-//        questionText.setText(qObject.getString("questiontext"));
+        questionText.setText("hello world");
 
-         Log.i("mjb", "display question: " + qObject);
+         Log.i("mjb", "in QuestionFragment display question: " + qObject);
 
         questionText.setText("mikeb");
 

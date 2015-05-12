@@ -26,24 +26,37 @@ public class MainActivity extends ActionBarActivity {
 
         try {
             mJObj = loadJSONFromAsset();
-             Log.i("mjb", "JSONstr: "+mJObj);
-            mQuestionObject = getQuestionObjToDisplay(mJObj);
-            mQuestion.displayQuestion(mQuestionObject);
+//            Log.i("mjb", "JSONstr: " + mJObj);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        Log.i("mjb", "JSONQuestion: " + mQuestionObject);
+        updateUI();
 
 
     }
+
+    private void updateUI() {
+        Log.i("mjb", "in updateUI");
+
+        try {
+            mQuestionObject = getQuestionObjToDisplay(mJObj);
+
+            QuestionFragment mFrag = new QuestionFragment();
+            getFragmentManager().beginTransaction().
+                    add(R.id.question_fragment_container, mFrag).commit();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
     // takes the JSON object read from file
     // returns the next question object to display
     private JSONObject getQuestionObjToDisplay(JSONObject mObj) throws JSONException {
         int i = 0; //hardcoded for testing
 
- Log.i("mjb", "JSON Obj: "+mObj);
         JSONArray questionsArray = mObj.getJSONArray("questions");
         JSONObject questionObj = questionsArray.getJSONObject(i);
 
