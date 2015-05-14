@@ -36,6 +36,9 @@ public class QuestionFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        Log.i("mjb", "in oncreateview questionfrag");
+
         // Inflate the layout for this fragment
         V = inflater.inflate(R.layout.question_fragment, container, false);
 

@@ -16,8 +16,7 @@ import java.io.InputStream;
 
 public class MainActivity extends ActionBarActivity {
     JSONObject mJObj;
-    JSONObject mQuestionObject;
-    QuestionFragment mQuestion;
+    QuestionFragment mFrag = new QuestionFragment();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,29 +25,23 @@ public class MainActivity extends ActionBarActivity {
 
         try {
             mJObj = loadJSONFromAsset();
-//            Log.i("mjb", "JSONstr: " + mJObj);
+            updateUI(getQuestionObjToDisplay(mJObj));
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        updateUI();
-
 
     }
 
-    private void updateUI() {
+    private void updateUI(JSONObject mQObj) throws JSONException {
         Log.i("mjb", "in updateUI");
 
-        try {
-            mQuestionObject = getQuestionObjToDisplay(mJObj);
-
-            QuestionFragment mFrag = new QuestionFragment();
             getFragmentManager().beginTransaction().
                     add(R.id.question_fragment_container, mFrag).commit();
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        mFrag.displayQuestion(mQObj);
+
+
+
     }
 
 
@@ -56,6 +49,8 @@ public class MainActivity extends ActionBarActivity {
     // returns the next question object to display
     private JSONObject getQuestionObjToDisplay(JSONObject mObj) throws JSONException {
         int i = 0; //hardcoded for testing
+
+        Log.i("mjb", "in getQuestionToDIsplay");
 
         JSONArray questionsArray = mObj.getJSONArray("questions");
         JSONObject questionObj = questionsArray.getJSONObject(i);
